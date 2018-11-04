@@ -8,9 +8,6 @@ var pram = {
 	queries: function() {
 		return window.location.search;
 	},
-	update: function(t, v) {
-		window.location.search = this.modify(t, v, true);
-	},
 	set: function(param_string) {
 		let url = location.protocol + '//' + location.host + location.pathname;
 		url += param_string;
@@ -46,7 +43,17 @@ var pram = {
 		});
 		return search_split;
 	},
-	modify: function(t, v, update) {
+	add: function(t, v) {
+		let params = this.get();
+		params.push({text: t, value: v});
+		this.set(this.construct_string(params));
+	},
+	remove: function(t) {
+		let params = this.get();
+		params = params.filter(e => e.text !== t);
+		this.set(this.construct_string(params));
+	},
+	modify: function(t, v) {
 		let clean_parameters = this.get();
 		clean_parameters.forEach(function(item, key) {
 			if (item.text === t){
@@ -54,8 +61,5 @@ var pram = {
 			}
 		});
 		this.set(this.construct_string(clean_parameters));
-		if (update){
-			return this.construct_string(clean_parameters);
-		}
 	},
 };
