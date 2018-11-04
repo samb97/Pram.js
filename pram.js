@@ -1,13 +1,12 @@
 /*
- * Pram.js ©2018
+ * Pram.js
+ * Version: 1
+
  * Sam Barnard
  * © 2018
 */
 
 var pram = {
-	queries: function() {
-		return window.location.search;
-	},
 	set: function(param_string) {
 		let url = location.protocol + '//' + location.host + location.pathname;
 		url += param_string;
@@ -33,7 +32,12 @@ var pram = {
 		}
 		return str;
 	},
-	get: function() {
+
+	// Intended active usage
+	queries: function() {
+		return window.location.search;
+	},
+	get: function(t) {
 		let search_split = this.queries().split(/[?&]/).filter(e => e !== '');
 		search_split.forEach(function(item, key) {
 			search_split[key] = {
@@ -41,7 +45,11 @@ var pram = {
 				value: item.split('=')[1],
 			};
 		});
-		return search_split;
+		if (t === undefined){
+			return search_split;
+		}else{
+			return search_split.find(e => e.text === t).value;
+		}
 	},
 	add: function(t, v) {
 		let params = this.get();
