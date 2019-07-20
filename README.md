@@ -54,7 +54,7 @@
 
 ## Modify a parameter
 
-    pram.modify('foo', 'bar');
+    pram.modify('foo', 'bizarre');
 
 #### Will modify:
 ##### Parameter...
